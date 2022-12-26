@@ -44,7 +44,7 @@ export default class EmployeeOrgApp implements IEmployeeOrgApp {
         action.run()
     }
 
-    // Add Employee
+    // Add Employee to the organization tree
     add(employee: Employee, supervisor: Employee = this.ceo){
         employee.supervisor = supervisor
         supervisor.subordinates.push(employee)
