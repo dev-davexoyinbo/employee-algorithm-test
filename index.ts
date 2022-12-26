@@ -42,8 +42,8 @@ const sophie: Employee = Employee.createWithIdAndNameFactory(15, "Sophie Turner"
 employeeApp.add(sophie, georgina)
 
 
-employeeApp.move(cassandra.uniqueId, tyler.uniqueId)
+employeeApp.move(ceo.uniqueId, cassandra.uniqueId)
 employeeApp.undo()
 employeeApp.redo()
 
-console.log(sarah)
+console.log(cassandra)
