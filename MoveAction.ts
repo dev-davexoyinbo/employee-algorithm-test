@@ -38,7 +38,7 @@ export class MoveAction implements IAction {
         // move all subordinates of employee to the new supervisor
         while (employee.subordinates.length > 0) {
             const e = employee.subordinates.pop()
-            if (!e) break;
+            if (!e) continue;
 
             // Change the supervisor to the employees current supervisor
             e.supervisor = currentSupervisor;
@@ -46,12 +46,10 @@ export class MoveAction implements IAction {
             if (currentSupervisor)
                 currentSupervisor.subordinates.push(e)
         }
-
+        
+        
         // Make supervisor the supervisor of employee
-        employee.supervisor = supervisor
-        // Add employee to the subordinates of the supervisor
-        supervisor.subordinates.push(employee)
-
+        EmployeeOrgApp.swapEmployeeSupervisor(employee, supervisor)
         this.previousSupervisorId = currentSupervisor?.uniqueId || null;
     }//end method run
 

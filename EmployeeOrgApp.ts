@@ -1,3 +1,4 @@
+import { off } from "process";
 import ActionStack from "./ActionStack";
 import Employee from "./Employee";
 import IAction from "./IAction";
@@ -38,7 +39,9 @@ export default class EmployeeOrgApp implements IEmployeeOrgApp {
         action.undo()
     }
     redo(): void {
-        throw new Error("Method not implemented.");
+        const action = this.actionStack.fastForward()
+        if(action == null) return;
+        action.run()
     }
 
     // Add Employee
@@ -70,7 +73,7 @@ export default class EmployeeOrgApp implements IEmployeeOrgApp {
 
         // Remove employee from the previous supervisor
         const index = !fromSupervisor ? -1 : fromSupervisor.subordinates.findIndex(el => el.uniqueId == employee.uniqueId)
-        if (index > 0) {
+        if (index >= 0) {
             fromSupervisor?.subordinates.splice(index, 1)
         }
     }//end method swapEmployeeSupervisor
