@@ -30,10 +30,12 @@ export default class EmployeeOrgApp implements IEmployeeOrgApp {
 
     move(employeeID: number, supervisorID: number): void {
         this.actionStack.add(new MoveAction(this, employeeID, supervisorID));
-    }
+    }//end method move
 
     undo(): void {
-        throw new Error("Method not implemented.");
+        const action = this.actionStack.rollback()
+        if(action == null) return;
+        action.undo()
     }
     redo(): void {
         throw new Error("Method not implemented.");
@@ -57,4 +59,19 @@ export default class EmployeeOrgApp implements IEmployeeOrgApp {
 
         return null
     }//end method search
+
+    public static swapEmployeeSupervisor(employee: Employee, toSupervisor: Employee){
+        const fromSupervisor = employee.supervisor
+
+        // Make toSupervisor the supervisor of employee
+        employee.supervisor = toSupervisor
+        // Add employee to the subordinates of the toSupervisor
+        toSupervisor.subordinates.push(employee)
+
+        // Remove employee from the previous supervisor
+        const index = !fromSupervisor ? -1 : fromSupervisor.subordinates.findIndex(el => el.uniqueId == employee.uniqueId)
+        if (index > 0) {
+            fromSupervisor?.subordinates.splice(index, 1)
+        }
+    }//end method swapEmployeeSupervisor
 }//end class EmployeeOrgApp

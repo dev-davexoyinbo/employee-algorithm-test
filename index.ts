@@ -43,5 +43,7 @@ employeeApp.add(sophie, georgina)
 
 
 employeeApp.move(cassandra.uniqueId, tyler.uniqueId)
+employeeApp.undo()
+employeeApp.redo()
 
-console.log(cassandra)
+console.log(tyler)
